@@ -9,6 +9,7 @@ describe("connectAlias", () => {
 
 describe("sshCommand", () => {
   it("builds command", () => expect(sshCommand("box")).toBe("ssh box"));
+  it("uses the given client", () => expect(sshCommand("box", "kitten ssh")).toBe("kitten ssh box"));
   it("is null for Host *", () => expect(sshCommand("*")).toBeNull());
 });
 

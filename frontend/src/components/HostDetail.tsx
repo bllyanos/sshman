@@ -2,7 +2,6 @@ import { Lock } from "lucide-react";
 import { cn } from "cn";
 import type { Host } from "@/lib/api";
 import { hostColor } from "@/lib/hostColor";
-import { sshCommand } from "@/lib/sshCommand";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
 import { CommandBox } from "./CommandBox";
@@ -12,6 +11,8 @@ import { OptionsTable } from "./OptionsTable";
 
 type Props = {
   host: Host;
+  /** The ssh command shown and copied, or null for pattern hosts. */
+  command: string | null;
   onConnect: () => void;
   onOpenTerminal: () => void;
   onCopy: (command: string) => void;
@@ -19,8 +20,7 @@ type Props = {
   onDelete: () => void;
 };
 
-export function HostDetail({ host, onConnect, onOpenTerminal, onCopy, onEdit, onDelete }: Props) {
-  const command = sshCommand(host.alias);
+export function HostDetail({ host, command, onConnect, onOpenTerminal, onCopy, onEdit, onDelete }: Props) {
   return (
     <section className="brutal-box @container flex min-w-0 flex-1 flex-col bg-paper">
       <header className={cn("border-b-3 border-ink px-5 pt-5 pb-5 @2xl:px-8 @2xl:pt-7 @2xl:pb-6", hostColor(host.alias))}>

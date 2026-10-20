@@ -4,7 +4,7 @@ import { HostService, type Host } from "@/lib/api";
 import { copyText } from "@/lib/clipboard";
 import { errorMessage } from "@/lib/errorMessage";
 import { filterHosts } from "@/lib/hostFilter";
-import { connectAlias } from "@/lib/sshCommand";
+import { connectAlias, sshCommand } from "@/lib/sshCommand";
 import { useHosts } from "@/hooks/useHosts";
 import { useHotkeys } from "@/hooks/useHotkeys";
 import { useTerminals } from "@/hooks/useTerminals";
@@ -59,12 +59,14 @@ export default function App() {
     }
   };
 
+  const commandFor = (h: Host) => sshCommand(h.alias, terminals.sshClient);
+
   const connect = (h: Host) => {
     const alias = connectAlias(h.alias);
     if (!alias) return;
     run(async () => {
       const used = await terminals.connect(alias);
-      toast.success(`ssh ${alias} → ${used}`);
+      toast.success(`${commandFor(h)} → ${used}`);
     }).catch(() => {});
   };
 
@@ -93,6 +95,7 @@ export default function App() {
   };
 
   const menuActions: HostMenuActions = {
+    command: commandFor,
     connect,
     copy,
     edit: (h) => setForm({ open: true, host: h }),
@@ -132,6 +135,7 @@ export default function App() {
           {selected ? (
             <HostDetail
               host={selected}
+              command={commandFor(selected)}
               onConnect={() => connect(selected)}
               onOpenTerminal={openShell}
               onCopy={copy}

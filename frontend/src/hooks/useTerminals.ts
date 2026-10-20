@@ -18,8 +18,14 @@ export function useTerminals() {
   // a remembered emulator that was uninstalled falls back to the default
   const active = available.includes(preferred) ? preferred : (available[0] ?? "");
 
+  // the ssh client the active emulator connects with, e.g. "kitten ssh" in kitty
+  const [sshClient, setSSHClient] = useState("ssh");
+  useEffect(() => {
+    TerminalService.SSHClient(active).then(setSSHClient, () => setSSHClient("ssh"));
+  }, [active]);
+
   const connect = useCallback((alias: string) => TerminalService.Connect(alias, active), [active]);
   const openShell = useCallback(() => TerminalService.OpenTerminal(active), [active]);
 
-  return { available, active, setPreferred, connect, openShell };
+  return { available, active, sshClient, setPreferred, connect, openShell };
 }

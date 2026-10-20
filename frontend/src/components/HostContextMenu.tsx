@@ -1,6 +1,5 @@
 import { Copy, Pencil, Plug, Trash2 } from "lucide-react";
 import type { Host } from "@/lib/api";
-import { sshCommand } from "@/lib/sshCommand";
 import {
   ContextMenu,
   ContextMenuContent,
@@ -12,6 +11,8 @@ import {
 } from "@/components/ui/context-menu";
 
 export type HostMenuActions = {
+  /** The ssh command for the host, or null when it can't be connected to. */
+  command: (host: Host) => string | null;
   connect: (host: Host) => void;
   copy: (command: string) => void;
   edit: (host: Host) => void;
@@ -26,7 +27,7 @@ type Props = {
 
 /** Right-click menu for a host; read-only hosts get edit/delete disabled. */
 export function HostContextMenu({ host, actions, children }: Props) {
-  const command = sshCommand(host.alias);
+  const command = actions.command(host);
   return (
     <ContextMenu>
       <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>

@@ -10,9 +10,10 @@ export function connectAlias(alias: string): string | null {
   return alias.split(/\s+/).find((p) => p !== "" && !PATTERN.test(p)) ?? null;
 }
 
-export function sshCommand(alias: string): string | null {
+/** The command line to connect, using the terminal's ssh client (e.g. "kitten ssh"). */
+export function sshCommand(alias: string, client = "ssh"): string | null {
   const target = connectAlias(alias);
-  return target ? `ssh ${target}` : null;
+  return target ? `${client} ${target}` : null;
 }
 
 /** "user@hostname:port" with missing parts left out. */

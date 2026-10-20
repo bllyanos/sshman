@@ -23,4 +23,6 @@ export const TerminalService = {
   AvailableTerminals: async (): Promise<string[]> => (await TerminalBindings.AvailableTerminals()) ?? [],
   Connect: (alias: string, preferred: string) => TerminalBindings.Connect(alias, preferred),
   OpenTerminal: (preferred: string) => TerminalBindings.OpenTerminal(preferred),
+  SSHClient: async (preferred: string): Promise<string> =>
+    ((await TerminalBindings.SSHClient(preferred)) ?? ["ssh"]).join(" "),
 };
