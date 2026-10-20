@@ -19,8 +19,8 @@ release: "1"
 contents:
   - src: "./bin/sshman"
     dst: "/usr/local/bin/sshman"
-  - src: "./build/appicon.png"
-    dst: "/usr/share/icons/hicolor/128x128/apps/sshman.png"
+  - src: "./build/appicon.svg"
+    dst: "/usr/share/icons/hicolor/scalable/apps/sshman.svg"
   - src: "./build/linux/sshman.desktop"
     dst: "/usr/share/applications/sshman.desktop"
 
