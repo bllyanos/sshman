@@ -1,16 +1,17 @@
 import type { Host } from "@/lib/api";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import type { HostMenuActions } from "./HostContextMenu";
 import { HostListItem } from "./HostListItem";
 
 type Props = {
   hosts: Host[];
   selectedAlias: string | null;
   onSelect: (alias: string) => void;
-  onConnect: (host: Host) => void;
+  actions: HostMenuActions;
   emptyText: string;
 };
 
-export function HostList({ hosts, selectedAlias, onSelect, onConnect, emptyText }: Props) {
+export function HostList({ hosts, selectedAlias, onSelect, actions, emptyText }: Props) {
   if (hosts.length === 0) {
     return (
       <div className="flex flex-1 items-center justify-center p-6 text-center font-mono text-sm text-muted-foreground">
@@ -27,7 +28,7 @@ export function HostList({ hosts, selectedAlias, onSelect, onConnect, emptyText 
             host={h}
             selected={h.alias === selectedAlias}
             onSelect={() => onSelect(h.alias)}
-            onConnect={() => onConnect(h)}
+            actions={actions}
           />
         ))}
       </ul>

@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { Plus } from "lucide-react";
 import type { Host } from "@/lib/api";
 import { Button } from "@/components/ui/button";
+import type { HostMenuActions } from "./HostContextMenu";
 import { HostList } from "./HostList";
 import { SearchBar } from "./SearchBar";
 
@@ -13,7 +14,7 @@ type Props = {
   onSearchKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   selectedAlias: string | null;
   onSelect: (alias: string) => void;
-  onConnect: (host: Host) => void;
+  actions: HostMenuActions;
   onNew: () => void;
 };
 
@@ -41,7 +42,7 @@ export const Sidebar = forwardRef<HTMLInputElement, Props>(function Sidebar(prop
         hosts={hosts}
         selectedAlias={props.selectedAlias}
         onSelect={props.onSelect}
-        onConnect={props.onConnect}
+        actions={props.actions}
         emptyText={query ? `no host matches “${query}”` : "no hosts yet — press NEW"}
       />
     </aside>

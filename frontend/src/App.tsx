@@ -13,6 +13,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { DeleteHostDialog } from "@/components/DeleteHostDialog";
 import { EmptyDetail } from "@/components/EmptyDetail";
 import { HostDetail } from "@/components/HostDetail";
+import type { HostMenuActions } from "@/components/HostContextMenu";
 import { HostFormDialog } from "@/components/HostFormDialog";
 import { Sidebar } from "@/components/Sidebar";
 import { StatusBar } from "@/components/StatusBar";
@@ -91,6 +92,13 @@ export default function App() {
     setDeleting(null);
   };
 
+  const menuActions: HostMenuActions = {
+    connect,
+    copy,
+    edit: (h) => setForm({ open: true, host: h }),
+    remove: (h) => setDeleting(h.alias),
+  };
+
   const onSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     const i = visible.findIndex((h) => h.alias === selectedAlias);
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -118,7 +126,7 @@ export default function App() {
             onSearchKeyDown={onSearchKeyDown}
             selectedAlias={selectedAlias}
             onSelect={setSelectedAlias}
-            onConnect={connect}
+            actions={menuActions}
             onNew={openNew}
           />
           {selected ? (
