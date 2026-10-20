@@ -37,6 +37,16 @@ func (s *TerminalService) Connect(alias, preferred string) (string, error) {
 	return e.Name, s.launcher.Run(e, e.SSHCommand(alias)...)
 }
 
+// SSHClient returns the ssh client argv prefix the emulator connects with (e.g. ["kitten", "ssh"]),
+// so the UI shows the same command Connect runs. Falls back to plain ssh when no emulator resolves.
+func (s *TerminalService) SSHClient(preferred string) []string {
+	e, err := terminal.Resolve(preferred)
+	if err != nil {
+		return []string{"ssh"}
+	}
+	return e.SSHClient()
+}
+
 // OpenTerminal opens a plain local shell window.
 func (s *TerminalService) OpenTerminal(preferred string) (string, error) {
 	e, err := terminal.Resolve(preferred)

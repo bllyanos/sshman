@@ -31,14 +31,18 @@ func (e Emulator) ShellArgs() []string {
 	return append([]string{}, e.shell...)
 }
 
+// SSHClient is the argv prefix used to connect: "ssh" unless the emulator has its own wrapper.
+func (e Emulator) SSHClient() []string {
+	if len(e.sshClient) == 0 {
+		return []string{"ssh"}
+	}
+	return append([]string{}, e.sshClient...)
+}
+
 // SSHCommand is the argv that connects to a configured host alias.
 // "--" stops the client from reading an alias that starts with "-" as an option.
 func (e Emulator) SSHCommand(alias string) []string {
-	client := e.sshClient
-	if len(client) == 0 {
-		client = []string{"ssh"}
-	}
-	return append(append([]string{}, client...), "--", alias)
+	return append(e.SSHClient(), "--", alias)
 }
 
 // RunArgs returns argv (without the binary) that runs cmd in a new window.

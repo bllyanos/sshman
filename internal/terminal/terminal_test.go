@@ -39,6 +39,14 @@ func TestSSHCommand(t *testing.T) {
 	}
 }
 
+func TestSSHClientIsACopy(t *testing.T) {
+	kitty := byName("kitty")
+	kitty.SSHClient()[0] = "mutated"
+	if got := kitty.SSHClient(); !reflect.DeepEqual(got, []string{"kitten", "ssh"}) {
+		t.Errorf("kitty: %v", got)
+	}
+}
+
 func TestRunArgs(t *testing.T) {
 	cases := map[string][]string{
 		"kitty":          {"kitten", "ssh", "--", "box"},
