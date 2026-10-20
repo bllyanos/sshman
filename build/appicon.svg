@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- sshman app icon: source for appicon.png (palette from frontend/src/styles/theme.css) -->
+  <!-- hard offset shadow -->
+  <rect x="176" y="176" width="736" height="736" fill="#111111"/>
+  <!-- window, outer edge 112..848 -->
+  <rect x="124" y="124" width="712" height="712" fill="#ffd23f" stroke="#111111" stroke-width="24"/>
+  <!-- title bar -->
+  <rect x="112" y="112" width="736" height="150" fill="#111111"/>
+  <rect x="168" y="161" width="52" height="52" fill="#ff6b9d"/>
+  <rect x="244" y="161" width="52" height="52" fill="#3bceac"/>
+  <rect x="320" y="161" width="52" height="52" fill="#fffdf5"/>
+  <!-- prompt ">" -->
+  <polyline points="250,420 420,555 250,690" fill="none" stroke="#111111" stroke-width="76" stroke-linecap="square" stroke-linejoin="miter"/>
+  <!-- cursor -->
+  <rect x="482" y="636" width="256" height="84" fill="#ff6b9d" stroke="#111111" stroke-width="24"/>
+</svg>
