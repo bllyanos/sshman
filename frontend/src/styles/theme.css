@@ -1,0 +1,103 @@
+/* Neo-brutalist design tokens: flat colors, ink borders, hard shadows. */
+
+:root {
+  --ink: #111111;
+  --paper: #fffdf5;
+  --white: #ffffff;
+  --yellow: #ffd23f;
+  --pink: #ff6b9d;
+  --cyan: #3bceac;
+  --blue: #5b8cff;
+  --red: #ff4d4d;
+  --lilac: #b8a1ff;
+
+  --background: var(--paper);
+  --foreground: var(--ink);
+  --card: var(--white);
+  --card-foreground: var(--ink);
+  --popover: var(--white);
+  --popover-foreground: var(--ink);
+  --primary: var(--yellow);
+  --primary-foreground: var(--ink);
+  --secondary: var(--white);
+  --secondary-foreground: var(--ink);
+  --muted: #f1ede0;
+  --muted-foreground: #55524a;
+  --accent: var(--pink);
+  --accent-foreground: var(--ink);
+  --destructive: var(--red);
+  --border: var(--ink);
+  --input: var(--ink);
+  --ring: var(--ink);
+  --radius: 0px;
+}
+
+@theme inline {
+  --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-ink: var(--ink);
+  --color-paper: var(--paper);
+  --color-yellow: var(--yellow);
+  --color-pink: var(--pink);
+  --color-cyan: var(--cyan);
+  --color-blue: var(--blue);
+  --color-red: var(--red);
+  --color-lilac: var(--lilac);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+
+  --shadow-brutal-sm: 2px 2px 0 0 var(--ink);
+  --shadow-brutal: 4px 4px 0 0 var(--ink);
+  --shadow-brutal-lg: 8px 8px 0 0 var(--ink);
+}
+
+/* Lifts on hover, presses flat on click. */
+@utility brutal-press {
+  transition:
+    transform 80ms ease,
+    box-shadow 80ms ease;
+  box-shadow: var(--shadow-brutal);
+  &:hover:not(:disabled) {
+    transform: translate(-1px, -1px);
+    box-shadow: 5px 5px 0 0 var(--ink);
+  }
+  &:active:not(:disabled) {
+    transform: translate(4px, 4px);
+    box-shadow: none;
+  }
+}
+
+@utility brutal-box {
+  border: 3px solid var(--ink);
+  box-shadow: var(--shadow-brutal);
+}
+
+@utility dot-grid {
+  background-image: radial-gradient(var(--ink) 1px, transparent 1px);
+  background-size: 18px 18px;
+  background-color: var(--paper);
+}
