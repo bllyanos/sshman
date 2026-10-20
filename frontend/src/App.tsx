@@ -116,7 +116,7 @@ export default function App() {
   return (
     <TooltipProvider>
       <div className="dot-grid flex h-full flex-col">
-        <main className="flex min-h-0 flex-1 gap-5 p-5">
+        <main className="flex min-h-0 flex-1 gap-4 p-4 xl:gap-5 xl:p-5">
           <Sidebar
             ref={searchRef}
             hosts={visible}

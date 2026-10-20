@@ -22,8 +22,8 @@ type Props = {
 export function HostDetail({ host, onConnect, onOpenTerminal, onCopy, onEdit, onDelete }: Props) {
   const command = sshCommand(host.alias);
   return (
-    <section className="brutal-box flex min-w-0 flex-1 flex-col bg-paper">
-      <header className={cn("border-b-3 border-ink px-8 pt-7 pb-6", hostColor(host.alias))}>
+    <section className="brutal-box @container flex min-w-0 flex-1 flex-col bg-paper">
+      <header className={cn("border-b-3 border-ink px-5 pt-5 pb-5 @2xl:px-8 @2xl:pt-7 @2xl:pb-6", hostColor(host.alias))}>
         <div className="mb-3 flex gap-2">
           <Badge variant="outline">host</Badge>
           {host.readOnly && (
@@ -32,11 +32,11 @@ export function HostDetail({ host, onConnect, onOpenTerminal, onCopy, onEdit, on
             </Badge>
           )}
         </div>
-        <h2 className="text-5xl leading-[0.95] font-bold tracking-tighter break-all">{host.alias}</h2>
+        <h2 className="text-4xl leading-[0.95] font-bold tracking-tighter break-all @2xl:text-5xl">{host.alias}</h2>
       </header>
 
       <ScrollArea className="min-h-0 flex-1">
-        <div className="flex flex-col gap-7 p-8">
+        <div className="flex flex-col gap-6 p-5 @2xl:gap-7 @2xl:p-8">
           {command && <CommandBox command={command} onCopy={() => onCopy(command)} />}
 
           <HostActions
@@ -48,11 +48,21 @@ export function HostDetail({ host, onConnect, onOpenTerminal, onCopy, onEdit, on
             onDelete={onDelete}
           />
 
-          <div className="grid grid-cols-2 gap-4">
-            <FieldCard label="Hostname" value={host.hostName} placeholder="same as alias" />
+          <div className="grid grid-cols-2 gap-3 @2xl:gap-4">
+            <FieldCard
+              label="Hostname"
+              value={host.hostName}
+              placeholder="same as alias"
+              className="col-span-2 @3xl:col-span-1"
+            />
             <FieldCard label="User" value={host.user} placeholder="current user" />
             <FieldCard label="Port" value={host.port} placeholder="22" />
-            <FieldCard label="Identity file" value={host.identityFile} placeholder="ssh default" />
+            <FieldCard
+              label="Identity file"
+              value={host.identityFile}
+              placeholder="ssh default"
+              className="col-span-2 @3xl:col-span-1"
+            />
           </div>
 
           <OptionsTable options={host.options} />

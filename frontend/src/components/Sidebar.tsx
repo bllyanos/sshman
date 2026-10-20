@@ -21,7 +21,7 @@ type Props = {
 export const Sidebar = forwardRef<HTMLInputElement, Props>(function Sidebar(props, searchRef) {
   const { hosts, total, query, onNew } = props;
   return (
-    <aside className="brutal-box flex w-[340px] shrink-0 flex-col bg-white">
+    <aside className="brutal-box flex w-[300px] shrink-0 flex-col bg-white xl:w-[340px]">
       <header className="flex items-end justify-between gap-3 border-b-3 border-ink bg-yellow px-4 pt-4 pb-3">
         <div>
           <h1 className="text-4xl leading-none font-bold tracking-tighter">
