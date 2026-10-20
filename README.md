@@ -60,6 +60,22 @@ After changing a Go service signature, regenerate the frontend bindings:
 wails3 generate bindings -clean=true -ts -i
 ```
 
+## Packaging
+
+Fedora packages are built on [COPR](https://copr.fedorainfracloud.org) from
+`packaging/rpm/sshman.spec` through `.copr/Makefile` (make_srpm method; the
+project needs "Enable internet access during builds" for npm and Go modules).
+
+To release: bump `Version` and add a `%changelog` entry in the spec, commit,
+then tag (`git tag v0.1.0 && git push --tags`).
+
+Build the rpm locally:
+
+```sh
+make -f .copr/Makefile srpm outdir=/tmp/sshman-rpm
+rpmbuild --rebuild /tmp/sshman-rpm/sshman-*.src.rpm
+```
+
 ## Layout
 
 ```
