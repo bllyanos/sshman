@@ -6,12 +6,6 @@ import (
 	"syscall"
 )
 
-// SSHCommand is the argv used to connect to a configured host alias.
-// "--" stops ssh from reading an alias that starts with "-" as an option.
-func SSHCommand(alias string) []string {
-	return []string{"ssh", "--", alias}
-}
-
 // Launcher starts emulators detached from sshman.
 type Launcher struct {
 	Dir string // working directory for new windows

@@ -24,7 +24,7 @@ func (s *TerminalService) AvailableTerminals() []string {
 	return names
 }
 
-// Connect runs `ssh <alias>` in a new window and returns the emulator used.
+// Connect runs the emulator's ssh client (e.g. `kitten ssh` in kitty) in a new window and returns the emulator used.
 // An empty preferred name picks the default emulator.
 func (s *TerminalService) Connect(alias, preferred string) (string, error) {
 	if alias == "" {
@@ -34,7 +34,7 @@ func (s *TerminalService) Connect(alias, preferred string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return e.Name, s.launcher.Run(e, terminal.SSHCommand(alias)...)
+	return e.Name, s.launcher.Run(e, e.SSHCommand(alias)...)
 }
 
 // OpenTerminal opens a plain local shell window.

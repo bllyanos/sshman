@@ -30,16 +30,25 @@ func byName(n string) Emulator {
 	panic(n)
 }
 
+func TestSSHCommand(t *testing.T) {
+	if got := byName("kitty").SSHCommand("box"); !reflect.DeepEqual(got, []string{"kitten", "ssh", "--", "box"}) {
+		t.Errorf("kitty: %v", got)
+	}
+	if got := byName("konsole").SSHCommand("box"); !reflect.DeepEqual(got, []string{"ssh", "--", "box"}) {
+		t.Errorf("konsole: %v", got)
+	}
+}
+
 func TestRunArgs(t *testing.T) {
-	cmd := SSHCommand("box")
 	cases := map[string][]string{
-		"kitty":          {"ssh", "--", "box"},
+		"kitty":          {"kitten", "ssh", "--", "box"},
 		"konsole":        {"-e", "ssh", "--", "box"},
 		"wezterm":        {"start", "--", "ssh", "--", "box"},
 		"gnome-terminal": {"--", "ssh", "--", "box"},
 	}
 	for n, want := range cases {
-		if got := byName(n).RunArgs(cmd...); !reflect.DeepEqual(got, want) {
+		e := byName(n)
+		if got := e.RunArgs(e.SSHCommand("box")...); !reflect.DeepEqual(got, want) {
 			t.Errorf("%s: got %v", n, got)
 		}
 	}
