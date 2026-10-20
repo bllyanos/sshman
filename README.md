@@ -1,59 +1,45 @@
-# Welcome to Your New Wails3 Project!
+# sshman
 
-Congratulations on generating your Wails3 application! This README will guide you through the next steps to get your project up and running.
+A small, neo-brutalist desktop app for managing `~/.ssh/config`.
+Built with Wails v3 (Go + WebKitGTK), React, Tailwind CSS v4 and shadcn/ui.
 
-## Getting Started
+## Features
 
-1. Navigate to your project directory in the terminal.
+- List, search (`/`), view, create (`Ctrl+N`), edit and delete `Host` entries
+- Connect: opens `ssh <alias>` in an external terminal (kitty, konsole, ghostty,
+  alacritty, wezterm, foot, ptyxis, gnome-terminal, xterm)
+- Open a plain local terminal, copy the ssh command
+- Safe writes: untouched lines are preserved byte-for-byte, the previous file is
+  kept in `~/.ssh/config.bak`, and saves are atomic with the original permissions
+- Pattern hosts (`Host *`, `Host a b`) and `Match` blocks are kept as-is and shown read-only
 
-2. To run your application in development mode, use the following command:
+In the search box: `↑`/`↓` select, `Enter` connects, `Esc` clears.
+Set `SSHMAN_TERMINAL=<name>` to force a terminal, or pick one in the status bar.
 
-   ```
-   wails3 dev
-   ```
+## Requirements (Fedora)
 
-   This will start your application and enable hot-reloading for both frontend and backend changes.
+```sh
+sudo dnf install gtk4-devel webkitgtk6.0-devel gcc pkgconf
+go install github.com/wailsapp/wails/v3/cmd/wails3@latest
+wails3 doctor
+```
 
-3. To build your application for production, use:
+## Development
 
-   ```
-   wails3 build
-   ```
+```sh
+wails3 dev          # hot reload
+wails3 build        # native binary in bin/sshman
+go test ./...       # backend tests
+cd frontend && npm test
+```
 
-   This will create a production-ready executable in the `build` directory.
+## Layout
 
-## Exploring Wails3 Features
-
-Now that you have your project set up, it's time to explore the features that Wails3 offers:
-
-1. **Check out the examples**: The best way to learn is by example. Visit the `examples` directory in the `v3/examples` directory to see various sample applications.
-
-2. **Run an example**: To run any of the examples, navigate to the example's directory and use:
-
-   ```
-   go run .
-   ```
-
-   Note: Some examples may be under development during the alpha phase.
-
-3. **Explore the documentation**: Visit the [Wails3 documentation](https://v3.wails.io/) for in-depth guides and API references.
-
-4. **Join the community**: Have questions or want to share your progress? Join the [Wails Discord](https://discord.gg/JDdSxwjhGf) or visit the [Wails discussions on GitHub](https://github.com/wailsapp/wails/discussions).
-
-## Project Structure
-
-Take a moment to familiarize yourself with your project structure:
-
-- `frontend/`: Contains your frontend code (HTML, CSS, JavaScript/TypeScript)
-- `main.go`: The entry point of your Go backend
-- `app.go`: Define your application structure and methods here
-- `wails.json`: Configuration file for your Wails project
-
-## Next Steps
-
-1. Modify the frontend in the `frontend/` directory to create your desired UI.
-2. Add backend functionality in `main.go`.
-3. Use `wails3 dev` to see your changes in real-time.
-4. When ready, build your application with `wails3 build`.
-
-Happy coding with Wails3! If you encounter any issues or have questions, don't hesitate to consult the documentation or reach out to the Wails community.
+```
+internal/sshconfig/   parse/render/edit ssh_config, file store, key listing
+internal/terminal/    terminal emulator detection and launching
+services/             Wails-bound HostService and TerminalService
+frontend/src/lib/     pure helpers (filter, validation, ssh command)
+frontend/src/hooks/   data hooks
+frontend/src/components/  UI (components/ui = restyled shadcn)
+```
