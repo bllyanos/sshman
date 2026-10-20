@@ -31,3 +31,11 @@ export function Connect(alias: string, preferred: string): $CancellablePromise<s
 export function OpenTerminal(preferred: string): $CancellablePromise<string> {
     return $Call.ByID(4742929, preferred);
 }
+
+/**
+ * SSHClient returns the ssh client argv prefix the emulator connects with (e.g. ["kitten", "ssh"]),
+ * so the UI shows the same command Connect runs. Falls back to plain ssh when no emulator resolves.
+ */
+export function SSHClient(preferred: string): $CancellablePromise<string[] | null> {
+    return $Call.ByID(2165274006, preferred);
+}
