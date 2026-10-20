@@ -11,11 +11,15 @@ type Emulator struct {
 	execFlag []string
 	// sshClient replaces plain "ssh" for emulators with their own wrapper.
 	sshClient []string
+	// sshEnv is set (via env) only for the ssh client; the emulator
+	// runs it without a shell, so shell rc exports don't apply.
+	sshEnv []string
 }
 
 // Known lists supported emulators in default preference order.
 var Known = []Emulator{
-	{Name: "kitty", Bin: "kitty", sshClient: []string{"kitten", "ssh"}},
+	// kitty exports TERM=xterm-kitty, which many remote hosts lack terminfo for
+	{Name: "kitty", Bin: "kitty", sshClient: []string{"kitten", "ssh"}, sshEnv: []string{"TERM=xterm-256color"}},
 	{Name: "konsole", Bin: "konsole", execFlag: []string{"-e"}},
 	{Name: "ghostty", Bin: "ghostty", execFlag: []string{"-e"}},
 	{Name: "alacritty", Bin: "alacritty", execFlag: []string{"-e"}},
@@ -42,7 +46,12 @@ func (e Emulator) SSHClient() []string {
 // SSHCommand is the argv that connects to a configured host alias.
 // "--" stops the client from reading an alias that starts with "-" as an option.
 func (e Emulator) SSHCommand(alias string) []string {
-	return append(e.SSHClient(), "--", alias)
+	cmd := []string{}
+	if len(e.sshEnv) > 0 {
+		cmd = append(append(cmd, "env"), e.sshEnv...)
+	}
+	cmd = append(cmd, e.SSHClient()...)
+	return append(cmd, "--", alias)
 }
 
 // RunArgs returns argv (without the binary) that runs cmd in a new window.

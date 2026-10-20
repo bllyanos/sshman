@@ -31,7 +31,7 @@ func byName(n string) Emulator {
 }
 
 func TestSSHCommand(t *testing.T) {
-	if got := byName("kitty").SSHCommand("box"); !reflect.DeepEqual(got, []string{"kitten", "ssh", "--", "box"}) {
+	if got := byName("kitty").SSHCommand("box"); !reflect.DeepEqual(got, []string{"env", "TERM=xterm-256color", "kitten", "ssh", "--", "box"}) {
 		t.Errorf("kitty: %v", got)
 	}
 	if got := byName("konsole").SSHCommand("box"); !reflect.DeepEqual(got, []string{"ssh", "--", "box"}) {
@@ -49,7 +49,7 @@ func TestSSHClientIsACopy(t *testing.T) {
 
 func TestRunArgs(t *testing.T) {
 	cases := map[string][]string{
-		"kitty":          {"kitten", "ssh", "--", "box"},
+		"kitty":          {"env", "TERM=xterm-256color", "kitten", "ssh", "--", "box"},
 		"konsole":        {"-e", "ssh", "--", "box"},
 		"wezterm":        {"start", "--", "ssh", "--", "box"},
 		"gnome-terminal": {"--", "ssh", "--", "box"},
