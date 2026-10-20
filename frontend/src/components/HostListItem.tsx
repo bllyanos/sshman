@@ -30,7 +30,7 @@ export function HostListItem({ host, selected, onSelect, actions }: Props) {
           <HostAvatar alias={host.alias} className={cn(selected && "border-paper")} />
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <span className="truncate text-base leading-tight font-bold">{host.alias}</span>
+              <span className="min-w-0 truncate text-base leading-tight font-bold">{host.alias}</span>
               {host.readOnly && <Lock className="size-3.5 shrink-0" aria-label="read-only" />}
             </div>
             <div className={cn("truncate font-mono text-xs", selected ? "text-paper/70" : "text-muted-foreground")}>
