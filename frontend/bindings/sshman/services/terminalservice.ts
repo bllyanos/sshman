@@ -18,7 +18,7 @@ export function AvailableTerminals(): $CancellablePromise<string[] | null> {
 }
 
 /**
- * Connect runs `ssh <alias>` in a new window and returns the emulator used.
+ * Connect runs the emulator's ssh client (e.g. `kitten ssh` in kitty) in a new window and returns the emulator used.
  * An empty preferred name picks the default emulator.
  */
 export function Connect(alias: string, preferred: string): $CancellablePromise<string> {
