@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { Host, HostService } from "@/lib/api";
+import { HostService, type Host } from "@/lib/api";
 import { copyText } from "@/lib/clipboard";
 import { errorMessage } from "@/lib/errorMessage";
 import { filterHosts } from "@/lib/hostFilter";

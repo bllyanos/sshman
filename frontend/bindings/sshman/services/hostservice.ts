@@ -9,7 +9,7 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Create } from "@wailsio/runtime";
+import { Call as $Call, CancellablePromise as $CancellablePromise } from "@wailsio/runtime";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -37,26 +37,17 @@ export function DeleteHost(alias: string): $CancellablePromise<void> {
     return $Call.ByID(511731366, alias);
 }
 
-export function ListHosts(): $CancellablePromise<sshconfig$0.Host[]> {
-    return $Call.ByID(1944986974).then(($result: any) => {
-        return $$createType1($result);
-    });
+export function ListHosts(): $CancellablePromise<sshconfig$0.Host[] | null> {
+    return $Call.ByID(1944986974);
 }
 
 /**
  * ListKeys suggests identity files for the host form.
  */
-export function ListKeys(): $CancellablePromise<string[]> {
-    return $Call.ByID(2815027423).then(($result: any) => {
-        return $$createType2($result);
-    });
+export function ListKeys(): $CancellablePromise<string[] | null> {
+    return $Call.ByID(2815027423);
 }
 
 export function UpdateHost(alias: string, h: sshconfig$0.Host): $CancellablePromise<void> {
     return $Call.ByID(3214034624, alias, h);
 }
-
-// Private type creation functions
-const $$createType0 = sshconfig$0.Host.createFrom;
-const $$createType1 = $Create.Array($$createType0);
-const $$createType2 = $Create.Array($Create.Any);

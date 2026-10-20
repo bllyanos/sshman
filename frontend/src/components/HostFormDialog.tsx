@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Save } from "lucide-react";
-import { Host, HostService } from "@/lib/api";
+import { HostService, type Host } from "@/lib/api";
 import { isValid, validateHost, type HostErrors } from "@/lib/validateHost";
 import { Button } from "@/components/ui/button";
 import {
@@ -60,7 +60,7 @@ export function HostFormDialog({ open, host, onOpenChange, onSubmit }: Props) {
     if (!isValid(found)) return;
     setSaving(true);
     try {
-      await onSubmit(new Host({ ...clean, readOnly: false }));
+      await onSubmit({ ...clean, readOnly: false });
       onOpenChange(false);
     } catch {
       // the parent reports the error; keep the form open for a retry

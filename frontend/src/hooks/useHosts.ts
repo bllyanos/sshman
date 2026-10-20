@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Host, HostService } from "@/lib/api";
+import { HostService, type Host } from "@/lib/api";
 import { errorMessage } from "@/lib/errorMessage";
 
 export function useHosts() {

@@ -8,15 +8,13 @@
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
-import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Create } from "@wailsio/runtime";
+import { Call as $Call, CancellablePromise as $CancellablePromise } from "@wailsio/runtime";
 
 /**
  * AvailableTerminals lists installed emulators, preferred first.
  */
-export function AvailableTerminals(): $CancellablePromise<string[]> {
-    return $Call.ByID(202733717).then(($result: any) => {
-        return $$createType0($result);
-    });
+export function AvailableTerminals(): $CancellablePromise<string[] | null> {
+    return $Call.ByID(202733717);
 }
 
 /**
@@ -33,6 +31,3 @@ export function Connect(alias: string, preferred: string): $CancellablePromise<s
 export function OpenTerminal(preferred: string): $CancellablePromise<string> {
     return $Call.ByID(4742929, preferred);
 }
-
-// Private type creation functions
-const $$createType0 = $Create.Array($Create.Any);
