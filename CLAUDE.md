@@ -15,6 +15,8 @@ cd frontend && npm test                         # vitest
 cd frontend && npx vitest run src/lib/hostFilter.test.ts   # single file
 cd frontend && npx tsc --noEmit                 # typecheck
 wails3 generate bindings -clean=true -ts -i     # regenerate frontend/bindings after changing service signatures
+./install-local.sh                              # build and install to ~/.local/bin (BIN_DIR overrides)
+make -f .copr/Makefile srpm outdir=/tmp/sshman-rpm   # build the SRPM from HEAD
 ```
 
 - Toolchain via `mise.toml` (Go 1.27, Node 20). Native builds need `gtk4-devel webkitgtk6.0-devel` (Wails v3 beta.33 uses GTK4/WebKitGTK 6.0, not GTK3).
@@ -36,6 +38,12 @@ Dependencies point inward: `main.go` → `services/` → `internal/*`. `internal
 - `frontend/src/lib/api.ts` — the only module that imports bindings; it normalizes `null` → `[]` and exports the `Host`/`Option` types the UI uses. Keep components off the bindings directly.
 - `frontend/src/lib/` — pure, tested helpers. `validateHost.ts` mirrors Go's `Host.Validate`; keep them in sync.
 - `frontend/src/components/ui/` — shadcn components restyled for the neo-brutalist theme; tokens and utilities (`brutal-press`, `brutal-box`, `shadow-brutal*`, palette `yellow/pink/cyan/blue/lilac/red/ink/paper`) live in `frontend/src/styles/theme.css`. Radius is 0 everywhere. shadcn components import `cn` from the `cn` package.
+
+## Packaging
+
+- Fedora rpm via COPR: `packaging/rpm/sshman.spec`, entry point `.copr/Makefile` (make_srpm; packs `git archive HEAD`, so uncommitted changes are not included). The COPR build needs internet access for npm and Go modules.
+- The spec builds with plain `go build -tags production` (no `wails3` on the builder) and installs the binary, `build/appicon.svg` as the scalable icon, and `build/linux/desktop` with `Exec` rewritten via `desktop-file-install`. Keep `build/linux/desktop` passing `desktop-file-validate`.
+- Release: bump `Version`, add a `%changelog` entry, commit, then tag `vX.Y.Z` and push tags.
 
 ## Conventions
 
