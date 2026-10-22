@@ -60,6 +60,12 @@ After changing a Go service signature, regenerate the frontend bindings:
 wails3 generate bindings -clean=true -ts -i
 ```
 
+## Install locally
+
+```sh
+./install-local.sh   # builds and copies the binary to ~/.local/bin (BIN_DIR to change)
+```
+
 ## Packaging
 
 Fedora packages are built on [COPR](https://copr.fedorainfracloud.org) from
